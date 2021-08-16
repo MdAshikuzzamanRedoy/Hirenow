@@ -1,0 +1,177 @@
+<?php
+
+include('header/header.php');
+
+require_once ('../../Controller/userinfo.php');
+$info=allhistory();
+
+?>
+<section>
+
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('https://www.w3schools.com/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 50%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+
+}
+
+#myTable {
+  border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 16px;
+
+    color: white;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: mediumseagreen;
+}
+
+.container {
+  border-radius: 5px;
+
+  padding: 84px;
+}
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  margin-right: 47%;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+.scroll {
+border: none;
+    padding: 3px;
+    font: 11px/36px sans-serif;
+    width: 947px;
+    height: 506px;;
+    overflow: scroll;
+}
+::-webkit-scrollbar {
+width: 12px;
+height: 12px;
+}
+::-webkit-scrollbar-track {
+border: 1px solid yellowgreen;
+border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+background: #3cb371;
+border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #88ba1c;
+}
+</style>
+ <form  method="post" action="" enctype="multipart/form-data">
+           
+
+          <center><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search By Date.." title="Type in a name"></center>
+ <center><div class="scroll">
+<table id="myTable">
+  <tr class="header">
+
+    <th style="color:black">Sl </th>
+    <th style="color:black">Name</th>
+
+    
+<th style="color:black">Username</th>
+    <th style="color:black">Phone</th>
+	<th style="color:black">Address</th>
+	<th style="color:black">Work</th>
+	<th style="color:black">Date</th>
+
+
+  </tr>
+ 
+  <tbody id="output">
+    <?php
+      foreach($info as $info)
+      {
+        echo "<tr>";
+
+        echo "<td>".$info["sl"]."</td>";
+        echo "<td>".$info["name"]."</td>";
+  echo "<td>".$info["username"]."</td>";
+
+echo "<td>".$info["phone"]."</td>";
+
+            echo "<td>".$info["address"]."</td>";
+			 echo "<td>".$info["package"]."</td>";
+ echo "<td>".$info["date"]."</td>";
+
+        echo "</tr>";
+      }
+    ?>
+
+  </tbody>
+</div>
+</table></center>
+
+
+
+            </form>
+
+
+
+
+
+	</div>
+	<script>
+ $(document).ready(function(){
+    $("#myInput").keypress(function(){
+      $.ajax({
+        type:'POST',
+        url:'../../Controller/searchallhistory.php',
+        data:{
+          name:$("#myInput").val(),
+        },
+        success:function(data){
+          $("#output").html(data);
+        }
+      });
+    });
+  });
+
+        </script>
+
+
+
+
+
+</section>
+<?php
+
+include('footer/footer.php');
+
+
+
+?>
